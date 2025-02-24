@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./Home/Home";
 import Products from "./Products/Products";
+import Payment from './Payment/Payment';
 import logo from './logo.svg';
 import './App.css';
 
@@ -25,6 +26,7 @@ function App() {
           <div className="header-links">
             <Link to="/">Home</Link>
             <Link to="/catalog">Catalog</Link>
+            <Link to="/payment">Payment</Link> {/* Link to Payment page */}
             <a href="cart.html">Cart</a>
             <a href="signin.html">Sign In</a>
           </div>
@@ -45,6 +47,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Products />} />
+            <Route path="/payment" element={<Payment />} /> {/* Add Payment route */}
           </Routes>
         </main>
         <footer>
