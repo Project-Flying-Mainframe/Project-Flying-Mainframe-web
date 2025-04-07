@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Component Snapshot matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container"
+  >
+    <header
+      class="header"
+    >
+      <div
+        class="brand"
+      >
+        <button>
+          ☰
+        </button>
+        <a
+          href="index.html"
+        >
+          Project Flying Mainframe
+        </a>
+      </div>
+      <div
+        class="header-links"
+      >
+        <a
+          href="/"
+        >
+          Home
+        </a>
+        <a
+          href="/catalog"
+        >
+          Catalog
+        </a>
+        <a
+          href="cart.html"
+        >
+          Cart
+        </a>
+        <a
+          href="signin.html"
+        >
+          Sign In
+        </a>
+      </div>
+    </header>
+    <aside
+      class="sidebar"
+    >
+      <h3>
+        Shopping Categories
+      </h3>
+      <button
+        class="sidebar-close-button"
+      >
+        x
+      </button>
+      <ul>
+        <li>
+          <a
+            href="index.html"
+          >
+            Pants
+          </a>
+        </li>
+        <li>
+          <a
+            href="index.html"
+          >
+            Shirts
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <main
+      class="main"
+    >
+      <div>
+        <h2>
+          Home
+        </h2>
+      </div>
+    </main>
+    <footer>
+      © 2022 Project Flying Mainframe
+    </footer>
+  </div>
+</DocumentFragment>
+`;

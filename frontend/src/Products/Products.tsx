@@ -4,8 +4,8 @@ function Products() {
   return (
     <div className="content">
       <ul className="products">
-        {productData.products.map((product) => (
-          <li key={product.name}>
+        {productData.products.map((product, index) => (
+          <li key={index}>
             <div className="product">
               <img
                 className="product-image"

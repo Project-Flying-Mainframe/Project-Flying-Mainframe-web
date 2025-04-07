@@ -1,9 +1,26 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App Component', () => {
+  it('renders Home link', () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const linkElement = screen.getByRole('link', { name: 'Home' });
+    expect(linkElement).toBeInTheDocument();
+  });
+
+  it('renders Catalog link', () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const linkElement = screen.getByRole('link', { name: 'Catalog' });
+    expect(linkElement).toBeInTheDocument();
+  });
 });
