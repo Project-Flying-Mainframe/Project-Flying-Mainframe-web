@@ -1,51 +1,62 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import data from './data';
+import { Route, Routes, Link } from "react-router-dom";
+import Home from "./Home/Home";
+import Products from "./Products/Products";
+import Orders from "./Orders/Orders";
+import logo from './logo.svg';
+import './App.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
-function Orders() {
-    return (
-        <div className="content content-margined">
-            <div className="order-header">
-                <h3>Orders</h3>
-            </div>
-            <div className="order-list">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>DATE</th>
-                            <th>TOTAL</th>
-                            <th>USER</th>
-                            <th>PAID</th>
-                            <th>PAID AT</th>
-                            <th>DELIVERED</th>
-                            <th>DELIVERED AT</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.orders.map((order) => (
-                            <tr key={order._id}>
-                                <td>{order._id}</td>
-                                <td>{order.createdAt}</td>
-                                <td>{order.totalPrice}</td>
-                                <td>{order.user.name}</td>
-                                <td>{order.isPaid ? 'Yes' : 'No'}</td>
-                                <td>{order.paidAt}</td>
-                                <td>{order.isDelivered ? 'Yes' : 'No'}</td>
-                                <td>{order.deliveredDate || 'N/A'}</td>
-                                <td>
-                                    <Link to={`/order/${order._id}`} className="button secondary">
-                                        Details
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+function App() {
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+
+  const openMenu = () => {
+    document.querySelector(".sidebar")?.classList.add("open");
+  };
+
+  const closeMenu = () => {
+    document.querySelector(".sidebar")?.classList.remove("open");
+  };
+
+  return (
+    <div className="grid-container"> 
+      <header className="header">
+        <div className="brand">
+          <button onClick={openMenu}>&#9776;</button>
+          <a href="index.html">Project Flying Mainframe</a>
         </div>
-    );
+        <div className="header-links">
+          <Link to="/">Home</Link>
+          <Link to="/catalog">Catalog</Link>
+          <Link to="/orders">Orders</Link>
+          {!isAuthenticated && (
+            <button onClick={() => loginWithRedirect()}>Log In</button>
+          )}
+          {isAuthenticated && (
+            <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              Log Out
+            </button>
+          )}
+        </div>
+      </header> 
+      <aside className="sidebar">
+        <h3>Shopping Categories</h3>
+        <button className="sidebar-close-button" onClick={closeMenu}>x</button>
+        <ul>
+          <li><a href="index.html">Pants</a></li>
+          <li><a href="index.html">Shirts</a></li>
+        </ul>
+      </aside>
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/catalog" element={<Products />} />
+          <Route path="/orders" element={<Orders />} />
+        </Routes>
+      </main>
+      <footer>&copy; 2022 Project Flying Mainframe</footer> 
+    </div>
+  );
 }
 
-export default Orders;
+export default App;

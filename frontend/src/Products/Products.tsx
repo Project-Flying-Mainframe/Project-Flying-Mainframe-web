@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Product = {
   id: number;
@@ -11,35 +11,40 @@ type Product = {
   rating: number;
   numberOfReviews: number;
   imageUrl: string;
-}
+};
 
 const emptyProducts: Product[] = [];
 
 function Products() {
-  //create a state hook that initializes an empty array of products
-  const [products, setProducts]: [Product[], (products: Product[])=> void]= useState(emptyProducts); 
-  
-  useEffect(()=> {
-    axios.get<Product[]>("http://localhost:5292/catalog",
-    {
-    headers: {
-    "Content-Type":"application/json",
-    },
-    })
-    .then((response)=>setProducts(response.data))
-    .catch((error) => console.log(error));
-    }, []);
+  const [products, setProducts] = useState(emptyProducts);
+  const { getAccessTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.get<Product[]>("http://localhost:5292/catalog", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+        });
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [getAccessTokenSilently]);
+
   return (
     <div className="content">
       <ul className="products">
         {products.map((product, index) => (
           <li key={index}>
             <div className="product">
-              <img
-                className="product-image"
-                src={product.imageUrl}
-                alt="product"
-              />
+              <img className="product-image" src={product.imageUrl} alt="product" />
               <div className="product-name">
                 <a href="product.html">{product.name}</a>
               </div>
